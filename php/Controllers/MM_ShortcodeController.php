@@ -4,6 +4,8 @@ if (!defined('ABSPATH')) {
     exit('Direct access denied.');
 }
 
+require_once(__DIR__ . '/../Views/MM_ShortcodeView.php');
+
 class MM_ShortcodeController {
 
     public function __construct()
@@ -19,8 +21,6 @@ class MM_ShortcodeController {
             $locale = 'en';
         }
 
-        $result = [];
-
         try {
 
             $title = MM_DBController::getMenuTitle($locale);
@@ -28,48 +28,32 @@ class MM_ShortcodeController {
             $products = MM_DBController::getSelectedProducts();
 
         } catch (Exception $exception) {
-            echo 'Lounaslistaa ei ole saatavilla.';
+
+            if ($locale === 'fi') {
+                echo MENU_LIST_UNAVAILABLE;
+            } else if ($locale === 'sv') {
+                echo MENU_LIST_UNAVAILABLE_SV;
+            } else {
+                echo MENU_LIST_UNAVAILABLE_EN;
+            }
+
             return;
         }
 
         if (empty($groups) || empty($products) || empty($title)) {
-            echo 'Lounaslistaa ei ole saatavilla.';
+
+            if ($locale === 'fi') {
+                echo MENU_LIST_UNAVAILABLE;
+            } else if ($locale === 'sv') {
+                echo MENU_LIST_UNAVAILABLE_SV;
+            } else {
+                echo MENU_LIST_UNAVAILABLE_EN;
+            }
+
             return;
         }
 
-        array_push($result, "<div>$title</div>");
-
-        forEach($groups as $group) {
-
-            array_push($result, "<div>");
-
-            array_push($result, "<label>$group->name</label>");
-
-            forEach($products as $product) {
-
-                if ($product->price_group === $group->id) {
-
-                    array_push($result, '<div>');
-
-                    if ($locale === 'fi') {
-                        array_push($result, $product->name_fi);
-                    } else if ($locale === 'en') {
-                        array_push($result, $product->name_en);
-                    } else {
-                        array_push($result, $product->name_sv);
-                    }
-
-                    array_push($result, '</div>');
-
-                }
-
-            }
-
-            array_push($result, '</div>');
-
-        }
-
-        echo implode('', $result);
+        echo MM_ShortcodeView::getShortcode($title, $groups, $products, $locale);
     }
 
 }
