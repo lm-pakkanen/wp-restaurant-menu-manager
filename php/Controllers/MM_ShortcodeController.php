@@ -16,7 +16,6 @@ class MM_ShortcodeController {
         ];
 
         $locale = get_locale();
-        $locale = 'en';
 
         if (!in_array($locale, $supportedLocales)) {
             $locale = 'en';
@@ -38,9 +37,15 @@ class MM_ShortcodeController {
 
         // TODO: Error handling
 
-        if (empty($groups)) { }
+        if (empty($groups)) {
+            echo 'Lounaslistaa ei ole saatavilla.';
+            return;
+        }
 
-        if (empty($products)) { }
+        if (empty($products)) {
+            echo 'Lounaslistaa ei ole saatavilla.';
+            return;
+        }
 
         array_push($result, "<div>$title</div>");
 
