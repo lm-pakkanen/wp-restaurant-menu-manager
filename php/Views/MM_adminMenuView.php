@@ -1,7 +1,5 @@
 <?php
 
-// TODO: Pass current title value to getTitleSelect()
-
 if (!defined('ABSPATH')) {
     exit('Direct access denied.');
 }
