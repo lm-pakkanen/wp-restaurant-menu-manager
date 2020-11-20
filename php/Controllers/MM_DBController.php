@@ -6,7 +6,6 @@ if (!defined('ABSPATH')) {
 
 class MM_DBController {
 
-
     public static function getPriceGroups() {
 
         global $wpdb;
@@ -15,7 +14,9 @@ class MM_DBController {
             "SELECT id, name FROM $wpdb->MM_priceGroups"
         );
 
-        if (empty($groups)) { throw new Exception('Price groups not found in database.'); }
+        if ($groups === false) {
+            throw new Exception('Unexpected error occurred');
+        }
 
         return $groups;
     }
@@ -28,7 +29,9 @@ class MM_DBController {
             "SELECT id, name_fi, name_en, name_sv, price_group, is_selected FROM $wpdb->MM_products"
         );
 
-        if (empty($products)) { throw new Exception('Products were not found in database.'); }
+        if ($products === false) {
+            throw new Exception('Unexpected error occurred');
+        }
 
         return $products;
     }
@@ -41,7 +44,9 @@ class MM_DBController {
             "SELECT id, name_fi, name_en, name_sv, price_group FROM $wpdb->MM_products WHERE is_selected = true"
         );
 
-        if (empty($products)) { throw new Exception('No selected products were found.'); }
+        if ($products === false) {
+            throw new Exception('No selected products were found.');
+        }
 
         return $products;
     }
@@ -50,10 +55,10 @@ class MM_DBController {
 
         if ($lang === 'fi') {
             return get_option('MM_MenuTitle');
-        } else if ($lang  === 'en') {
-            return get_option('MM_MenuTitle_en');
-        } else {
+        } else if ($lang  === 'sv') {
             return get_option('MM_MenuTitle_sv');
+        } else {
+            return get_option('MM_MenuTitle_en');
         }
 
     }
@@ -81,7 +86,9 @@ class MM_DBController {
             ]
         );
 
-        if (!$success && gettype($success) === 'bool') { throw new Exception('Could not clear selected products.'); }
+        if ($success === false) {
+            throw new Exception('Unexpected error occurred');
+        }
     }
 
     public static function setProductSelected($id) {
@@ -101,8 +108,9 @@ class MM_DBController {
             ]
         );
 
-        if (!$success) { throw new Exception('Could not set selected product'); }
-
+        if ($success === false) {
+            throw new Exception('Unexpected error occurred');
+        }
     }
 
     public static function updatePriceGroup($id, $name) {
@@ -122,7 +130,9 @@ class MM_DBController {
             ]
         );
 
-        if (!$success) { throw new Exception('Price group name could not be updated.'); }
+        if ($success === false) {
+            throw new Exception('Unexpected error occurred');
+        }
     }
 
     public static function addProduct($name_fi, $name_en, $name_sv, $price_group) {
@@ -145,7 +155,9 @@ class MM_DBController {
             ]
         );
 
-        if (!$success) { throw new Exception('Could not add product.'); }
+        if ($success === false) {
+            throw new Exception('Unexpected error occurred');
+        }
     }
 
     public static function updateProduct($id, $name_fi, $name_en, $name_sv, $price_group) {
@@ -171,7 +183,9 @@ class MM_DBController {
             ]
         );
 
-        if (!$success) { throw new Exception('Product could not be updated.'); }
+        if ($success === false) {
+            throw new Exception('Unexpected error occurred');
+        }
     }
 
     public static function deleteProduct($id) {
@@ -180,8 +194,9 @@ class MM_DBController {
 
         $success = $wpdb->delete($wpdb->MM_products, [ 'id' => stripslashes($id) ]);
 
-        if (!$success) { throw new Exception('Product could not be deleted.'); }
-
+        if ($success === false) {
+            throw new Exception('Unexpected error occurred');
+        }
     }
 
 }

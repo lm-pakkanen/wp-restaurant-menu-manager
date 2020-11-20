@@ -16,16 +16,16 @@ if (!defined('ABSPATH')) {
     exit('Direct access denied.');
 }
 
-require_once('php/Controllers/index.php');
-require_once('php/constants.php');
+require_once(__DIR__ . '/php/Controllers/index.php');
+require_once(__DIR__ . '/php/constants.php');
 
 class MenuManager {
 
     public function __construct()
     {
-        register_activation_hook(__FILE__, [$this, 'activate']);
-        register_deactivation_hook(__FILE__, [$this, 'deactivate']);
-        register_uninstall_hook(__FILE__, [$this, 'uninstall']);
+        register_activation_hook(__FILE__, [__CLASS__, 'activate']);
+        register_deactivation_hook(__FILE__, [__CLASS__, 'deactivate']);
+        register_uninstall_hook(__FILE__, [__CLASS__, 'uninstall']);
 
         add_action('init', [$this, 'init']);
         $this->startControllers();

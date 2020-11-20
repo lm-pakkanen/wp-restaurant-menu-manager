@@ -21,19 +21,23 @@ class MM_dataController {
             return;
         }
 
+        if (!$this->isUserAllowed()) {
+            die('Unauthorized.');
+        }
+
         $menuTitle = $_POST['titleSelect'];
 
-        $fiTitleIndex = array_search($menuTitle, MENU_TITLE_OPTIONS);
+        $menuTitleIndex = array_search($menuTitle, MENU_TITLE_OPTIONS);
 
-        $menuTitleEn = MENU_TITLE_OPTIONS_EN[$fiTitleIndex];
-        $menuTitleSv = MENU_TITLE_OPTIONS_SV[$fiTitleIndex];
+        $menuTitleEn = MENU_TITLE_OPTIONS_EN[$menuTitleIndex];
+        $menuTitleSv = MENU_TITLE_OPTIONS_SV[$menuTitleIndex];
 
-        $selectedProducts = [];
+        $selectedProductIDs = [];
 
         forEach($_POST as $key => $value) {
 
             if (preg_match('/^groupSelect_/', $key)) {
-                array_push($selectedProducts, $value);
+                array_push($selectedProductIDs, $value);
             }
 
         }
@@ -44,19 +48,19 @@ class MM_dataController {
             MM_DBController::setMenuTitle($menuTitle, $menuTitleEn, $menuTitleSv);
 
         } catch (Exception $exception) {
-            die($exception->getMessage());
+            die($exception);
         }
 
-        if (!empty($selectedProducts)) {
+        if (!empty($selectedProductIDs)) {
 
-            forEach($selectedProducts as $productID) {
+            forEach($selectedProductIDs as $productID) {
 
                 try {
 
                     MM_DBController::setProductSelected($productID);
 
                 } catch (Exception $exception) {
-                    die($exception->getMessage());
+                    die($exception);
                 }
 
             }
@@ -65,7 +69,16 @@ class MM_dataController {
 
         wp_safe_redirect($_SERVER['HTTP_REFERER']);
         exit();
-
     }
 
+    private function isUserAllowed() {
+
+        global $current_user;
+
+        $authorized = [
+            'administrator'
+        ];
+
+        return array_intersect($authorized, $current_user->roles);
+    }
 }

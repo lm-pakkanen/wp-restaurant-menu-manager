@@ -4,6 +4,12 @@ if (!defined('ABSPATH')) {
     exit('Direct access denied.');
 }
 
+$supportedLocales = [
+    'fi',
+    'en',
+    'sv'
+];
+
 $menuTitleOptions = [
     'Maanantai',
     'Tiistai',
@@ -37,6 +43,7 @@ $menuTitleOptionsSv = [
     'Ingen lunch'
 ];
 
+if (!defined('SUPPORTED_LOCALES')) { define('SUPPORTED_LOCALES', $supportedLocales); }
 if (!defined('MENU_TITLE_OPTIONS')) { define('MENU_TITLE_OPTIONS', $menuTitleOptions); }
 if (!defined('MENU_TITLE_OPTIONS_EN')) { define('MENU_TITLE_OPTIONS_EN', $menuTitleOptionsEn); }
 if (!defined('MENU_TITLE_OPTIONS_SV')) { define('MENU_TITLE_OPTIONS_SV', $menuTitleOptionsSv); }

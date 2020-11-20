@@ -4,7 +4,7 @@ if (!defined('ABSPATH')) {
     exit('Direct access denied.');
 }
 
-require_once(__DIR__ . '/../Views/MM_adminMenuView.php');
+require_once(__DIR__ . '/../Views/MM_AdminMenuView.php');
 
 class MM_AdminMenuController {
 
@@ -24,7 +24,7 @@ class MM_AdminMenuController {
             'menu_title' => 'Lounaslistat',
             'capability' => 'manage_options',
             'menu_slug' => 'lounaslistat',
-            'callback' => [$this, 'handleSettingsPage'],
+            'callback' => [$this, 'getSettingsPage'],
             'icon_url' => '',
             'position' => 4
         ];
@@ -41,17 +41,17 @@ class MM_AdminMenuController {
 
     }
 
-    public function handleSettingsPage() {
+    public function getSettingsPage() {
 
         try {
 
             $products = MM_DBController::getProducts();
-            $groups = MM_DBController::getPriceGroups();
+            $priceGroups = MM_DBController::getPriceGroups();
             $title = MM_DBController::getMenuTitle('fi');
 
-        } catch (Exception $exception) { die($exception->getMessage()); }
+        } catch (Exception $exception) { die($exception); }
 
-        MM_adminMenuView::getSettingsPage($groups, $products, $title);
+        echo MM_adminMenuView::getSettingsPage($priceGroups, $products, $title);
     }
 
 }

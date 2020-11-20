@@ -13,40 +13,26 @@ class MM_ShortcodeController {
 
     public function getMenu() {
 
-        $supportedLocales = [
-            'fi',
-            'en',
-            'sv'
-        ];
-
         $locale = get_locale();
 
-        if (!in_array($locale, $supportedLocales)) {
+        if (!in_array($locale, SUPPORTED_LOCALES)) {
             $locale = 'en';
         }
 
         $result = [];
 
-        $title = MM_DBController::getMenuTitle($locale);
-
-        $groups = [];
-        $products = [];
-
         try {
 
+            $title = MM_DBController::getMenuTitle($locale);
             $groups = MM_DBController::getPriceGroups();
             $products = MM_DBController::getSelectedProducts();
 
-        } catch (Exception $exception) { }
-
-        // TODO: Error handling
-
-        if (empty($groups)) {
+        } catch (Exception $exception) {
             echo 'Lounaslistaa ei ole saatavilla.';
             return;
         }
 
-        if (empty($products)) {
+        if (empty($groups) || empty($products) || empty($title)) {
             echo 'Lounaslistaa ei ole saatavilla.';
             return;
         }
