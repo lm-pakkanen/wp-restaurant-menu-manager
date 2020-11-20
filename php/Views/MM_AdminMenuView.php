@@ -11,6 +11,7 @@ class MM_AdminMenuView {
      * @param $priceGroups
      * @param $products
      * @param $menuTitle
+     * @return string
      */
     public static function getSettingsPage($priceGroups, $products, $menuTitle) {
 
