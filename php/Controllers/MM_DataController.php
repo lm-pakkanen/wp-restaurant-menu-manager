@@ -1,5 +1,9 @@
 <?php
 
+if (!defined('ABSPATH')) {
+    exit('Direct access denied.');
+}
+
 class MM_dataController {
 
     public function __construct()

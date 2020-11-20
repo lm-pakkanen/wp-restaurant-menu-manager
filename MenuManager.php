@@ -23,6 +23,10 @@ class MenuManager {
 
     public function __construct()
     {
+        register_activation_hook(__FILE__, [$this, 'activate']);
+        register_deactivation_hook(__FILE__, [$this, 'deactivate']);
+        register_uninstall_hook(__FILE__, [$this, 'uninstall']);
+
         add_action('init', [$this, 'init']);
         $this->startControllers();
     }
@@ -33,34 +37,37 @@ class MenuManager {
         $this->configure();
     }
 
+    public static function activate() {}
+    public static function deactivate() {}
+    public static function uninstall() {}
+
+    private function addScripts() {}
+    private function addStyles() {}
+
     private function startControllers() {
         new MM_AdminMenuController();
         new MM_dataController();
         new MM_ShortcodeController();
     }
 
-    public static function activate() {}
-    public static function deactivate() {}
-    public static function uninstall() {}
-
     private function configure() {
 
         global $wpdb;
 
-        $prefix = 'MM_';
+        $DBPrefix = 'MM_';
 
-        $priceGroups = 'priceGroups';
-        $products = 'products';
+        $priceGroupsTable = 'priceGroups';
+        $productsTable = 'products';
 
-        $wpdb->MM_priceGroups = $wpdb->prefix . $prefix . $priceGroups;
-        $wpdb->MM_products = $wpdb->prefix . $prefix . $products;
+        $wpdb->MM_priceGroups = $wpdb->prefix . $DBPrefix . $priceGroupsTable;
+        $wpdb->MM_products = $wpdb->prefix . $DBPrefix . $productsTable;
 
         register_setting('MenuManager', 'MM_MenuTitle');
+        register_setting('MenuManager', 'MM_MenuTitle_en');
+        register_setting('MenuManager', 'MM_MenuTitle_sv');
 
     }
 
-    private function addScripts() {}
-    private function addStyles() {}
 }
 
 new MenuManager();
