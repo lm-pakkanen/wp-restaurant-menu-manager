@@ -39,16 +39,7 @@ class MM_adminMenuView {
 
         $result = [];
 
-        $opts = [
-            'Maanantai',
-            'Tiistai',
-            'Keskiviikko',
-            'Torstai',
-            'Perjantai',
-            'Lauantai',
-            'Sunnuntai',
-            'Ei lounasta'
-        ];
+        $opts = MENU_TITLE_OPTIONS;
 
         array_push($result, '<select name="titleSelect">');
 

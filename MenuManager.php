@@ -17,6 +17,7 @@ if (!defined('ABSPATH')) {
 }
 
 require_once('php/Controllers/index.php');
+require_once('php/constants.php');
 
 class MenuManager {
 
@@ -35,6 +36,7 @@ class MenuManager {
     private function startControllers() {
         new MM_AdminMenuController();
         new MM_dataController();
+        new MM_ShortcodeController();
     }
 
     public static function activate() {}

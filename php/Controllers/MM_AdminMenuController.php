@@ -47,7 +47,7 @@ class MM_AdminMenuController {
 
             $products = MM_DBController::getProducts();
             $groups = MM_DBController::getPriceGroups();
-            $title = MM_DBController::getMenuTitle();
+            $title = MM_DBController::getMenuTitle('fi');
 
         } catch (Exception $exception) { die($exception->getMessage()); }
 

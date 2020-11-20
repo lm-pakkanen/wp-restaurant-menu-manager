@@ -19,6 +19,11 @@ class MM_dataController {
 
         $menuTitle = $_POST['titleSelect'];
 
+        $fiTitleIndex = array_search($menuTitle, MENU_TITLE_OPTIONS);
+
+        $menuTitleEn = MENU_TITLE_OPTIONS_EN[$fiTitleIndex];
+        $menuTitleSv = MENU_TITLE_OPTIONS_SV[$fiTitleIndex];
+
         $selectedProducts = [];
 
         forEach($_POST as $key => $value) {
@@ -29,14 +34,10 @@ class MM_dataController {
 
         }
 
-        forEach($selectedProducts as $productID) {
-            echo $productID;
-        }
-
         try {
 
             MM_DBController::clearProductsSelected();
-            MM_DBController::setMenuTitle($menuTitle);
+            MM_DBController::setMenuTitle($menuTitle, $menuTitleEn, $menuTitleSv);
 
         } catch (Exception $exception) {
             die($exception->getMessage());

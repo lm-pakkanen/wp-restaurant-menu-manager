@@ -29,12 +29,35 @@ class MM_DBController {
         return $products;
     }
 
-    public static function getMenuTitle() {
-        return get_option('MM_MenuTitle');
+    public static function getSelectedProducts() {
+
+        global $wpdb;
+
+        $products = $wpdb->get_results(
+            "SELECT id, name_fi, name_en, name_sv, price_group FROM $wpdb->MM_products WHERE is_selected = true"
+        );
+
+        if (empty($products)) { throw new Exception('No selected products were found.'); }
+
+        return $products;
     }
 
-    public static function setMenuTitle($title) {
-        update_option('MM_MenuTitle', $title);
+    public static function getMenuTitle($lang) {
+
+        if ($lang === 'fi') {
+            return get_option('MM_MenuTitle');
+        } else if ($lang  === 'en') {
+            return get_option('MM_MenuTitle_en');
+        } else {
+            return get_option('MM_MenuTitle_sv');
+        }
+
+    }
+
+    public static function setMenuTitle($title_fi, $title_en, $title_sv) {
+        update_option('MM_MenuTitle', $title_fi);
+        update_option('MM_MenuTitle_en', $title_en);
+        update_option('MM_MenuTitle_sv', $title_sv);
     }
 
     public static function clearProductsSelected() {
@@ -54,7 +77,7 @@ class MM_DBController {
             ]
         );
 
-        if (!$success) { throw new Exception('Could not clear selected products.'); }
+        if (!$success && gettype($success) === 'bool') { throw new Exception('Could not clear selected products.'); }
     }
 
     public static function setProductSelected($id) {

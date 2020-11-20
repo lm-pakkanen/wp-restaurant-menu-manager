@@ -7,3 +7,4 @@ if (!defined('ABSPATH')) {
 require_once('MM_AdminMenuController.php');
 require_once('MM_DBController.php');
 require_once('MM_DataController.php');
+require_once('MM_ShortcodeController.php');
