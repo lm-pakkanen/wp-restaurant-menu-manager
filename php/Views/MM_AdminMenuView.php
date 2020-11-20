@@ -126,4 +126,43 @@ class MM_AdminMenuView {
         return implode('', $result);
     }
 
+    private static function getEditingSection($priceGroups, $products) {
+
+        $result = [];
+
+        $href = admin_url('admin.php');
+
+        forEach($priceGroups as $group) {
+
+            array_push($result, '<div>');
+
+            array_push($result, "<form method='POST' action='$href'>");
+
+            array_push($result, "<input type='text' name='group_name_$group->id' value='$group->name' />");
+
+            array_push($result, '<div>');
+
+            forEach($products as $product) {
+
+                array_push($result, '<div>');
+
+                array_push($result, "<label>$product->name_fi</label>");
+
+                array_push($result, "<input type='text' value='$product->name_fi' name='product_name_fi_{$product->id}' />");
+
+                array_push($result, '</div>');
+
+            }
+
+            array_push($result, '<input type="submit" name="menuEditSubmit">');
+
+            array_push($result, '</div>');
+
+            array_push($result, '</div>');
+
+        }
+
+        return implode('', $result);
+    }
+
 }
