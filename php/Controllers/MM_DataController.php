@@ -13,6 +13,107 @@ class MM_dataController {
 
     public function admin_init() {
         $this->handleMenuUpdate();
+        $this->handleProductAdd();
+        $this->handleProductsEdit();
+    }
+
+    private function handleProductAdd() {
+
+        if (!isset($_POST['productAddSubmit'])) {
+            return;
+        }
+
+        if (!$this->isUserAllowed()) {
+            die('Unauthorized.');
+        }
+
+        $name_fi = $_POST['name_fi'];
+        $name_en = $_POST['name_en'];
+        $name_sv = $_POST['name_sv'];
+
+        $price_group = $_POST['price_group'];
+
+
+        if (empty($name_fi) || empty($name_en) || empty($name_sv) || empty($price_group)) {
+            die('Required parameter missing: name_fi,name_en,name_sv,price_group');
+        }
+
+        try {
+            MM_DBController::addProduct($name_fi, $name_en, $name_sv, $price_group);
+        } catch (Exception $exception) {
+            die($exception);
+        }
+
+        wp_safe_redirect($_SERVER['HTTP_REFERER']);
+        exit();
+    }
+
+    private function handleProductsEdit() {
+
+        if (!isset($_POST['productsEditSubmit'])) {
+            return;
+        }
+
+        if (!$this->isUserAllowed()) {
+            die('Unauthorized.');
+        }
+
+        $groups = [];
+        $products = [];
+
+        forEach($_POST['groups'] as $key => $group) {
+
+            $id = $key;
+            $value = $group['name'];
+
+            try {
+
+                MM_DBController::updatePriceGroup($id, $value);
+
+            } catch (Exception $exception) {
+                die($exception);
+            }
+
+        }
+
+        forEach($_POST['products'] as $key => $product) {
+
+            $id = $key;
+            $name_fi = $product['nameFi'];
+            $name_en = $product['nameEn'];
+            $name_sv = $product['nameSv'];
+            $price_group = $product['priceGroup'];
+
+            try {
+
+                MM_DBController::updateProduct($id, $name_fi, $name_en, $name_sv, $price_group);
+
+            } catch (Exception $exception) {
+                die($exception);
+            }
+
+        }
+
+        wp_safe_redirect($_SERVER['HTTP_REFERER']);
+        exit();
+    }
+
+    private function getIDFromInputName($inputName) {
+
+        $id = preg_split(
+            '/_([^_]+)$/',
+            $inputName,
+            -1,
+            PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY
+        );
+
+        $id = end($id);
+
+        if (empty($id)) {
+            die('Menu group ID was not found.');
+        }
+
+        return $id;
     }
 
     private function handleMenuUpdate() {

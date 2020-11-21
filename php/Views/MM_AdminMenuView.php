@@ -178,7 +178,7 @@ class MM_AdminMenuView {
 
             array_push($result, "<form method='POST' action='$href'>");
 
-            array_push($result, "<input type='text' name='group_name_$group->id' value='$group->name' />");
+            array_push($result, "<input type='text' name='groups[$group->id][name]' value='$group->name' />");
 
             array_push($result, '<div>');
 
@@ -188,11 +188,11 @@ class MM_AdminMenuView {
 
                 array_push($result, "<label>$product->name_fi</label>");
 
-                array_push($result, "<input type='text' value='$product->name_fi' name='product_nameFi_{$product->id}' />");
-                array_push($result, "<input type='text' value='$product->name_en' name='product_nameEn_{$product->id}' />");
-                array_push($result, "<input type='text' value='$product->name_sv' name='product_nameSv_{$product->id}' />");
+                array_push($result, "<input type='text' value='$product->name_fi' name='products[$product->id][nameFi]' />");
+                array_push($result, "<input type='text' value='$product->name_en' name='products[$product->id][nameEn]' />");
+                array_push($result, "<input type='text' value='$product->name_sv' name='products[$product->id][nameSv]' />");
 
-                array_push($result, "<select name='product_priceGroup_{$product->id}'>");
+                array_push($result, "<select name='products[$product->id][priceGroup]'>");
 
 
                 forEach ($priceGroups as $innerGroup) {
@@ -213,7 +213,7 @@ class MM_AdminMenuView {
 
             }
 
-            array_push($result, '<input type="submit" name="productEditSubmit" value="Päivitä tuotteet ja hintaryhmät">');
+            array_push($result, '<input type="submit" name="productsEditSubmit" value="Päivitä tuotteet ja hintaryhmät">');
 
             array_push($result, '</div>');
 

@@ -3,7 +3,7 @@
  * Plugin Name: Menu Manager for WordPress
  * Author: Harriot Software
  * Description: Manage restaurant menus from the WordPress control panel.
- * Version: 0.0.1
+ * Version: 0.1
  * Requires at least: 5.5
  * Requires PHP: 7.4
  * Text Domain: MenuManager
