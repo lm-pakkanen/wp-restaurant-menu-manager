@@ -43,6 +43,8 @@ class MM_AdminMenuView {
         array_push($result, '</div>');
 
 
+        array_push($result, self::getNewProductSection($priceGroups));
+
         array_push($result, self::getEditingSection($priceGroups, $products));
 
 
@@ -129,6 +131,39 @@ class MM_AdminMenuView {
         return implode('', $result);
     }
 
+    private static function getNewProductSection($priceGroups) {
+
+        $result = [];
+
+        $href = admin_url('admin.php');
+
+        array_push($result, '<div>');
+
+        array_push($result, '<h2>Lisää uusi tuote</h2>');
+
+        array_push($result, "<form method='POST' action='$href'>");
+
+        array_push($result, '<input type="text" value="" name="name_fi">');
+        array_push($result, '<input type="text" value="" name="name_en">');
+        array_push($result, '<input type="text" value="" name="name_sv">');
+
+        array_push($result, '<select name="price_group">');
+
+        forEach($priceGroups as $group) {
+            array_push($result, "<option value='$group->id'>$group->name</option>");
+        }
+
+        array_push($result, '</select>');
+
+        array_push($result, '<input type="submit" name="productAddSubmit" value="Lisää uusi tuote" />');
+
+        array_push($result, '</form>');
+
+        array_push($result, '</div>');
+
+        return implode('', $result);
+    }
+
     private static function getEditingSection($priceGroups, $products) {
 
         $result = [];
@@ -138,6 +173,8 @@ class MM_AdminMenuView {
         forEach($priceGroups as $group) {
 
             array_push($result, '<div>');
+
+            array_push($result, '<h2>Muokkaa tuotteita ja hintaryhmiä</h2>');
 
             array_push($result, "<form method='POST' action='$href'>");
 
