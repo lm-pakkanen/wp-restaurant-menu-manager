@@ -121,6 +121,8 @@ class MM_AdminMenuView {
             array_push($result,'<div>');
             array_push($result, "<select name='groupSelect_{$group->id}' required>");
 
+            array_push($result, "<option value='9999'>--</option>");
+
             forEach($products as $product) {
 
                 // If product belongs to current group

@@ -2,7 +2,7 @@
 
 class MM_ShortcodeView {
 
-    public static function getShortcode($title, $groups, $products, $locale) {
+    public static function getShortcode($title, $groups, $selectedProducts, $locale) {
 
         $result = [];
 
@@ -14,24 +14,34 @@ class MM_ShortcodeView {
 
             array_push($result, "<label>$group->name</label>");
 
-            forEach($products as $product) {
+            $productFound = false;
+
+            forEach($selectedProducts as $product) {
 
                 if ($product->price_group === $group->id) {
+
+                    $productFound = true;
 
                     array_push($result, '<div>');
 
                     if ($locale === 'fi') {
-                        array_push($result, $product->name_fi);
+                        $name = $product->name_fi;
                     } else if ($locale === 'en') {
-                        array_push($result, $product->name_en);
+                        $name = $product->name_en;
                     } else {
-                        array_push($result, $product->name_sv);
+                        $name = $product->name_sv;
                     }
+
+                    array_push($result, $name);
 
                     array_push($result, '</div>');
 
                 }
 
+            }
+
+            if (!$productFound) {
+                array_push($result, '<div>----</div>');
             }
 
             array_push($result, '</div>');
