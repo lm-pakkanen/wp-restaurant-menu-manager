@@ -42,7 +42,11 @@ class MenuManager {
     public static function uninstall() {}
 
     private function addScripts() {}
-    private function addStyles() {}
+
+    private function addStyles() {
+        wp_register_style('WPSLCss', plugins_url( '/css/admin.css', __FILE__));
+        wp_enqueue_style('WPSLCss');
+    }
 
     private function startControllers() {
         new MM_AdminMenuController();

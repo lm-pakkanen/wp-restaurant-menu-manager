@@ -25,11 +25,22 @@ class MM_AdminMenuView {
         // Title
         array_push($result, '<h1>Lounaslistat</h1>');
 
+        array_push($result, '<div class="menuEdit">');
+
+        array_push($result, '<h2>Muokkaa lounaslistaa</h2>');
+
         array_push($result, "<form method='POST' action='$submit_href'>");
 
+
         // Select menu's title
+        array_push($result, '<div>');
+        array_push($result, '<div>');
         array_push($result, '<label>Lounaslistan otsikko </label>');
+        array_push($result, '</div>');
+        array_push($result, '<div>');
         array_push($result, self::getTitleSelect($menuTitle));
+        array_push($result, '</div>');
+        array_push($result, '</div>');
 
         // Get products grouped under each price group
         array_push($result, '<div>');
@@ -37,9 +48,13 @@ class MM_AdminMenuView {
         array_push($result, '</div>');
 
         // Submit form
+        array_push($result, '<div>');
         array_push($result, '<input type="submit" name="menuUpdateSubmit" value="Päivitä lounaslista" />');
+        array_push($result, '</div>');
 
         array_push($result, '</form>');
+
+        array_push($result, '</div>');
 
         array_push($result, self::getNewProductSection($priceGroups));
         array_push($result, self::getEditingSection($priceGroups, $products));
@@ -62,7 +77,7 @@ class MM_AdminMenuView {
         $opts = MENU_TITLE_OPTIONS;
 
         // Select input
-        array_push($result, '<select name="titleSelect">');
+        array_push($result, '<select name="titleSelect" required>');
 
         // Echo each title option
         forEach($opts as $option) {
@@ -95,13 +110,16 @@ class MM_AdminMenuView {
         forEach($groups as $group) {
 
             // Start each group with a new div
-            array_push($result,'<div>');
+            array_push($result,'<div class="group">');
 
             // Group title
-            array_push($result, "<label>{$group->name} ruoka</label><br />");
+            array_push($result,'<div>');
+            array_push($result, "<label>{$group->name} ruoka</label>");
+            array_push($result,'</div>');
 
             // Select new product for group
-            array_push($result, "<select name='groupSelect_{$group->id}'>");
+            array_push($result,'<div>');
+            array_push($result, "<select name='groupSelect_{$group->id}' required>");
 
             forEach($products as $product) {
 
@@ -120,6 +138,7 @@ class MM_AdminMenuView {
             }
 
             array_push($result, '</select>');
+            array_push($result,'</div>');
 
             array_push($result, '</div>');
 
@@ -135,17 +154,25 @@ class MM_AdminMenuView {
 
         $href = admin_url('admin.php');
 
-        array_push($result, '<div>');
+        array_push($result, '<div class="productAdd">');
 
         array_push($result, '<h2>Lisää uusi tuote</h2>');
 
         array_push($result, "<form method='POST' action='$href'>");
 
-        array_push($result, '<input type="text" value="" name="name_fi">');
-        array_push($result, '<input type="text" value="" name="name_en">');
-        array_push($result, '<input type="text" value="" name="name_sv">');
+        array_push($result, '<div>');
 
-        array_push($result, '<select name="price_group">');
+        array_push($result, '<label>Nimi suomeksi</label>');
+        array_push($result, '<input type="text" value="" name="name_fi" required>');
+
+        array_push($result, '<label>Nimi englanniksi</label>');
+        array_push($result, '<input type="text" value="" name="name_en" required>');
+
+        array_push($result, '<label>Nimi ruotsiksi</label>');
+        array_push($result, '<input type="text" value="" name="name_sv" required>');
+
+        array_push($result, '<label>Hintaryhmä</label>');
+        array_push($result, '<select name="price_group" required>');
 
         forEach($priceGroups as $group) {
             array_push($result, "<option value='$group->id'>$group->name</option>");
@@ -153,7 +180,11 @@ class MM_AdminMenuView {
 
         array_push($result, '</select>');
 
+        array_push($result, '</div>');
+
+        array_push($result, '<div>');
         array_push($result, '<input type="submit" name="productAddSubmit" value="Lisää uusi tuote" />');
+        array_push($result, '</div>');
 
         array_push($result, '</form>');
 
@@ -168,56 +199,85 @@ class MM_AdminMenuView {
 
         $href = admin_url('admin.php');
 
+        array_push($result, '<div class="productsEdit">');
+
+        array_push($result, '<h2>Muokkaa tuotteita ja hintaryhmiä</h2>');
+
+        array_push($result, "<form method='POST' action='$href'>");
+
+        array_push($result, "<div class='groupContainer'>");
+
         forEach($priceGroups as $group) {
 
-            array_push($result, '<div>');
+            array_push($result, '<div class="group">');
 
-            array_push($result, '<h2>Muokkaa tuotteita ja hintaryhmiä</h2>');
-
-            array_push($result, "<form method='POST' action='$href'>");
-
-            array_push($result, "<input type='text' name='groups[$group->id][name]' value='$group->name' />");
 
             array_push($result, '<div>');
+            array_push($result, "<label>Hintaryhmä: $group->name</label>");
+            array_push($result, '</div>');
+
+
+            array_push($result, "<input type='text' name='groups[$group->id][name]' value='$group->name' required/>");
 
             forEach($products as $product) {
 
-                array_push($result, '<div>');
+                if ($product->price_group === $group->id) {
 
-                array_push($result, "<label>$product->name_fi</label>");
+                    array_push($result, '<div class="product">');
 
-                array_push($result, "<input type='text' value='$product->name_fi' name='products[$product->id][nameFi]' />");
-                array_push($result, "<input type='text' value='$product->name_en' name='products[$product->id][nameEn]' />");
-                array_push($result, "<input type='text' value='$product->name_sv' name='products[$product->id][nameSv]' />");
+                    array_push($result, '<div>');
+                    array_push($result, "<label>Tuote: $product->name_fi</label>");
+                    array_push($result, '</div>');
 
-                array_push($result, "<select name='products[$product->id][priceGroup]'>");
+                    array_push($result, '<div>');
+
+                    array_push($result, '<label>Nimi suomeksi</label>');
+                    array_push($result, "<input type='text' value='$product->name_fi' name='products[$product->id][nameFi]' required/>");
+
+                    array_push($result, '<label>Nimi englanniksi</label>');
+                    array_push($result, "<input type='text' value='$product->name_en' name='products[$product->id][nameEn]' required/>");
+
+                    array_push($result, '<label>Nimi ruotsiksi</label>');
+                    array_push($result, "<input type='text' value='$product->name_sv' name='products[$product->id][nameSv]' required/>");
+
+                    array_push($result, '<label>Hintaryhmä</label>');
+                    array_push($result, "<select name='products[$product->id][priceGroup]' required>");
 
 
-                forEach ($priceGroups as $innerGroup) {
-                    if ($group->id === $innerGroup->id) {
+                    forEach ($priceGroups as $innerGroup) {
+                        if ($group->id === $innerGroup->id) {
 
-                        array_push($result, "<option value='$innerGroup->id' selected>{$innerGroup->name}</option>");
+                            array_push($result, "<option value='$innerGroup->id' selected>{$innerGroup->name}</option>");
 
-                    } else {
+                        } else {
 
-                        array_push($result, "<option value='$innerGroup->id'>{$innerGroup->name}</option>");
+                            array_push($result, "<option value='$innerGroup->id'>{$innerGroup->name}</option>");
 
+                        }
                     }
+
+                    array_push($result, "</select>");
+
+                    array_push($result, '</div>');
+
+                    array_push($result, '</div>');
+
                 }
-
-                array_push($result, "</select>");
-
-                array_push($result, '</div>');
 
             }
 
-            array_push($result, '<input type="submit" name="productsEditSubmit" value="Päivitä tuotteet ja hintaryhmät">');
-
             array_push($result, '</div>');
-
-            array_push($result, '</div>');
-
         }
+
+        array_push($result, "</div>");
+
+        array_push($result, '<div>Muistathan päivittää lounaslistan tuotteiden ja hintaryhmien muokkaamisen jälkeen.</div>');
+
+        array_push($result, '<input type="submit" name="productsEditSubmit" value="Päivitä tuotteet ja hintaryhmät">');
+
+        array_push($result, '</form>');
+
+        array_push($result, '</div>');
 
         return implode('', $result);
     }
