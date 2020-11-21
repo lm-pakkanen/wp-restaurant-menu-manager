@@ -40,13 +40,11 @@ class MM_AdminMenuView {
         array_push($result, '<input type="submit" name="menuUpdateSubmit" value="Päivitä lounaslista" />');
 
         array_push($result, '</form>');
-        array_push($result, '</div>');
-
 
         array_push($result, self::getNewProductSection($priceGroups));
-
         array_push($result, self::getEditingSection($priceGroups, $products));
 
+        array_push($result, '</div>');
 
         // Convert array to string and echo
         return implode('', $result);
