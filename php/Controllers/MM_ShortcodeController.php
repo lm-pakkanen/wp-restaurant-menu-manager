@@ -40,7 +40,7 @@ class MM_ShortcodeController {
             return;
         }
 
-        if (empty($groups) || empty($products) || empty($title)) {
+        if (empty($groups) || empty($title)) {
 
             if ($locale === 'fi') {
                 echo MENU_LIST_UNAVAILABLE;
