@@ -15,7 +15,7 @@ class MM_DBController {
         );
 
         if ($groups === false) {
-            throw new Exception('Unexpected error occurred');
+            throw new Exception($wpdb->last_error);
         }
 
         return $groups;
@@ -30,7 +30,7 @@ class MM_DBController {
         );
 
         if ($products === false) {
-            throw new Exception('Unexpected error occurred');
+            throw new Exception($wpdb->last_error);
         }
 
         return $products;
@@ -87,7 +87,7 @@ class MM_DBController {
         );
 
         if ($success === false) {
-            throw new Exception('Unexpected error occurred');
+            throw new Exception($wpdb->last_error);
         }
     }
 
@@ -109,7 +109,7 @@ class MM_DBController {
         );
 
         if ($success === false) {
-            throw new Exception('Unexpected error occurred');
+            throw new Exception($wpdb->last_error);
         }
     }
 
@@ -131,7 +131,7 @@ class MM_DBController {
         );
 
         if ($success === false) {
-            throw new Exception('Unexpected error occurred');
+            throw new Exception($wpdb->last_error);
         }
     }
 
@@ -156,7 +156,7 @@ class MM_DBController {
         );
 
         if ($success === false) {
-            throw new Exception('Unexpected error occurred');
+            throw new Exception($wpdb->last_error);
         }
     }
 
@@ -184,7 +184,7 @@ class MM_DBController {
         );
 
         if ($success === false) {
-            throw new Exception('Unexpected error occurred');
+            throw new Exception($wpdb->last_error);
         }
     }
 
@@ -195,7 +195,7 @@ class MM_DBController {
         $success = $wpdb->delete($wpdb->MM_products, [ 'id' => stripslashes($id) ]);
 
         if ($success === false) {
-            throw new Exception('Unexpected error occurred');
+            throw new Exception($wpdb->last_error);
         }
     }
 

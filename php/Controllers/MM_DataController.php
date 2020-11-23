@@ -22,7 +22,7 @@ class MM_dataController {
 
     private function handleMenuPrint() {
 
-        if (!isset($_GET['action'])) {
+        if (!isset($_GET['MM_action'])) {
             return;
         }
 
@@ -78,9 +78,6 @@ class MM_dataController {
             die('Unauthorized.');
         }
 
-        $groups = [];
-        $products = [];
-
         forEach($_POST['groups'] as $key => $group) {
 
             $id = $key;
@@ -116,24 +113,6 @@ class MM_dataController {
 
         wp_safe_redirect($_SERVER['HTTP_REFERER']);
         exit();
-    }
-
-    private function getIDFromInputName($inputName) {
-
-        $id = preg_split(
-            '/_([^_]+)$/',
-            $inputName,
-            -1,
-            PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY
-        );
-
-        $id = end($id);
-
-        if (empty($id)) {
-            die('Menu group ID was not found.');
-        }
-
-        return $id;
     }
 
     private function handleMenuUpdate() {

@@ -28,12 +28,16 @@ class MenuManager {
         register_uninstall_hook(__FILE__, [__CLASS__, 'uninstall']);
 
         add_action('init', [$this, 'init']);
+        add_action('admin_init', [$this, 'admin_init']);
         $this->startControllers();
     }
 
     public function init() {
         $this->addScripts();
         $this->addStyles();
+    }
+
+    public function admin_init() {
         $this->configure();
     }
 
@@ -65,12 +69,11 @@ class MenuManager {
 
         $DBPrefix = 'MM_';
 
-        // TODO: Update to match server tables
-        $priceGroupsTable = 'priceGroups';
+        $priceGroupsTable = 'prices';
         $productsTable = 'products';
 
-        $wpdb->MM_priceGroups = $wpdb->prefix . $DBPrefix . $priceGroupsTable;
-        $wpdb->MM_products = $wpdb->prefix . $DBPrefix . $productsTable;
+        $wpdb->MM_priceGroups = 'wp_' . $DBPrefix . $priceGroupsTable;
+        $wpdb->MM_products = 'wp_' . $DBPrefix . $productsTable;
 
         register_setting('MenuManager', 'MM_MenuTitle');
         register_setting('MenuManager', 'MM_MenuTitle_en');

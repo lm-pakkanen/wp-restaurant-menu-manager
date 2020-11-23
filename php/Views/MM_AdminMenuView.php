@@ -16,7 +16,7 @@ class MM_AdminMenuView {
     public static function getSettingsPage($priceGroups, $products, $menuTitle) {
 
         $submit_href = wp_nonce_url(admin_url('admin.php'));
-        $print_href = wp_nonce_url(admin_url('admin.php?action=print'));
+        $print_href = wp_nonce_url(admin_url('admin.php?MM_action=print'));
 
         $result = [];
 
