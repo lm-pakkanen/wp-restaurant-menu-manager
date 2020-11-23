@@ -17,6 +17,20 @@ class MM_dataController {
         $this->handleProductsEdit();
     }
 
+    private function handleMenuPrint() {
+
+        if (!isset($_POST['menuPrintSubmit'])) {
+            return;
+        }
+
+        if (!$this->isUserAllowed()) {
+            die('Unauthorized.');
+        }
+
+        echo MM_PrintingController::getPDF();
+        exit();
+    }
+
     private function handleProductAdd() {
 
         if (!isset($_POST['productAddSubmit'])) {
