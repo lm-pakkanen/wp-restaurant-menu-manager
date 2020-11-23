@@ -16,6 +16,7 @@ class MM_AdminMenuView {
     public static function getSettingsPage($priceGroups, $products, $menuTitle) {
 
         $submit_href = wp_nonce_url(admin_url('admin.php'));
+        $print_href = wp_nonce_url(admin_url('admin.php?action=print'));
 
         $result = [];
 
@@ -34,12 +35,15 @@ class MM_AdminMenuView {
 
         // Select menu's title
         array_push($result, '<div>');
+
         array_push($result, '<div>');
         array_push($result, '<label>Lounaslistan otsikko </label>');
         array_push($result, '</div>');
+
         array_push($result, '<div>');
         array_push($result, self::getTitleSelect($menuTitle));
         array_push($result, '</div>');
+
         array_push($result, '</div>');
 
         // Get products grouped under each price group
@@ -49,7 +53,10 @@ class MM_AdminMenuView {
 
         // Submit form
         array_push($result, '<div>');
+
         array_push($result, '<input type="submit" name="menuUpdateSubmit" value="Päivitä lounaslista" />');
+        array_push($result, "<input type='button' name='menuPrintButton' value='Tulosta lounaslista' onClick='document.location.href=\"{$print_href}\"' />");
+
         array_push($result, '</div>');
 
         array_push($result, '</form>');

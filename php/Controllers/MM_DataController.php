@@ -4,6 +4,8 @@ if (!defined('ABSPATH')) {
     exit('Direct access denied.');
 }
 
+require_once(__DIR__ . '/../Models/MM_MenuListPDF.php');
+
 class MM_dataController {
 
     public function __construct()
@@ -12,6 +14,7 @@ class MM_dataController {
     }
 
     public function admin_init() {
+        $this->handleMenuPrint();
         $this->handleMenuUpdate();
         $this->handleProductAdd();
         $this->handleProductsEdit();
@@ -19,7 +22,7 @@ class MM_dataController {
 
     private function handleMenuPrint() {
 
-        if (!isset($_POST['menuPrintSubmit'])) {
+        if (!isset($_GET['action'])) {
             return;
         }
 
@@ -27,7 +30,10 @@ class MM_dataController {
             die('Unauthorized.');
         }
 
-        echo MM_PrintingController::getPDF();
+        $menuList = new MM_MenuListPDF();
+
+        echo $menuList->getPDF();
+
         exit();
     }
 
