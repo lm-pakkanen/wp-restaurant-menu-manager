@@ -1,18 +1,25 @@
 <?php
 
+if (!defined('ABSPATH')) {
+    exit('Direct access denied.');
+}
+
 class MM_ShortcodeView {
 
     public static function getShortcode($title, $groups, $selectedProducts, $locale) {
 
         $result = [];
+        $emptyGroups = [];
 
-        array_push($result, "<div>$title</div>");
+        array_push($result, '<div class="menuList">');
+
+        array_push($result, "<div class='title'>$title</div>");
 
         forEach($groups as $group) {
 
-            array_push($result, "<div>");
+            $groupResult = [];
 
-            array_push($result, "<label>$group->name</label>");
+            array_push($groupResult, "<div class='group'>");
 
             $productFound = false;
 
@@ -22,7 +29,7 @@ class MM_ShortcodeView {
 
                     $productFound = true;
 
-                    array_push($result, '<div>');
+                    array_push($groupResult, '<div>');
 
                     if ($locale === 'fi') {
                         $name = $product->name_fi;
@@ -32,21 +39,32 @@ class MM_ShortcodeView {
                         $name = $product->name_sv;
                     }
 
-                    array_push($result, $name);
+                    array_push($groupResult, $name);
 
-                    array_push($result, '</div>');
+                    array_push($groupResult, '</div>');
 
                 }
 
             }
 
             if (!$productFound) {
-                array_push($result, '<div>----</div>');
+                array_push($groupResult, '<div>----</div>');
+                array_push($groupResult, "<div>----</div>");
+                array_push($groupResult, '</div>');
+                $emptyGroups = array_merge($emptyGroups, $groupResult);
+            } else {
+                array_push($groupResult, "<div>$group->name</div>");
+                array_push($groupResult, '</div>');
+                $result = array_merge($result, $groupResult);
             }
 
-            array_push($result, '</div>');
-
         }
+
+        if (!empty($emptyGroups)) {
+            $result = array_merge($result, $emptyGroups);
+        }
+
+        array_push($result, '</div>');
 
         return implode('', $result);
     }

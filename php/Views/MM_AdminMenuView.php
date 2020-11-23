@@ -15,7 +15,7 @@ class MM_AdminMenuView {
      */
     public static function getSettingsPage($priceGroups, $products, $menuTitle) {
 
-        $submit_href = admin_url('admin.php');
+        $submit_href = wp_nonce_url(admin_url('admin.php'));
 
         $result = [];
 
@@ -154,7 +154,7 @@ class MM_AdminMenuView {
 
         $result = [];
 
-        $href = admin_url('admin.php');
+        $href = wp_nonce_url(admin_url('admin.php'));
 
         array_push($result, '<div class="productAdd">');
 
@@ -199,7 +199,7 @@ class MM_AdminMenuView {
 
         $result = [];
 
-        $href = admin_url('admin.php');
+        $href = wp_nonce_url(admin_url('admin.php'));
 
         array_push($result, '<div class="productsEdit">');
 

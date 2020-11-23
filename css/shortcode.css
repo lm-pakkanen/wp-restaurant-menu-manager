@@ -1,0 +1,26 @@
+.menuList {
+    display: flex;
+    flex-direction: column;
+    max-width: 500px !important;
+    font-family: "Times New Roman", Sans-serif, serif;
+}
+
+.menuList > .title {
+    font-size: 2em;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: .5em;
+}
+
+.menuList > .group {
+    display: flex;
+    margin: .1em 0 .1em 3.5em;
+}
+
+.menuList > .group > div {
+
+}
+
+.menuList > .group > div:last-of-type {
+    margin-left: auto;
+}

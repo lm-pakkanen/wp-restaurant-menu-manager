@@ -44,8 +44,13 @@ class MenuManager {
     private function addScripts() {}
 
     private function addStyles() {
-        wp_register_style('WPSLCss', plugins_url( '/css/admin.css', __FILE__));
-        wp_enqueue_style('WPSLCss');
+
+        wp_register_style('MMCss', plugins_url( '/css/admin.css', __FILE__));
+        wp_enqueue_style('MMCss');
+
+        wp_register_style('MMShortCodeCss', plugins_url( '/css/shortcode.css', __FILE__));
+        wp_enqueue_style('MMShortCodeCss');
+
     }
 
     private function startControllers() {
@@ -60,6 +65,7 @@ class MenuManager {
 
         $DBPrefix = 'MM_';
 
+        // TODO: Update to match server tables
         $priceGroupsTable = 'priceGroups';
         $productsTable = 'products';
 
