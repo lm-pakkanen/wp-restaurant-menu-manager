@@ -240,18 +240,24 @@ class MM_AdminMenuView {
 
                     array_push($result, '<div>');
 
+                    array_push($result, '<div>');
                     array_push($result, '<label>Nimi suomeksi</label>');
                     array_push($result, "<input type='text' value='$product->name_fi' name='products[$product->id][nameFi]' required/>");
+                    array_push($result, '</div>');
 
+                    array_push($result, '<div>');
                     array_push($result, '<label>Nimi englanniksi</label>');
                     array_push($result, "<input type='text' value='$product->name_en' name='products[$product->id][nameEn]' required/>");
+                    array_push($result, '</div>');
 
+                    array_push($result, '<div>');
                     array_push($result, '<label>Nimi ruotsiksi</label>');
                     array_push($result, "<input type='text' value='$product->name_sv' name='products[$product->id][nameSv]' required/>");
+                    array_push($result, '</div>');
 
+                    array_push($result, '<div>');
                     array_push($result, '<label>Hintaryhmä</label>');
                     array_push($result, "<select name='products[$product->id][priceGroup]' required>");
-
 
                     forEach ($priceGroups as $innerGroup) {
                         if ($group->id === $innerGroup->id) {
@@ -266,6 +272,7 @@ class MM_AdminMenuView {
                     }
 
                     array_push($result, "</select>");
+                    array_push($result, '</div>');
 
                     array_push($result, '</div>');
 

@@ -53,15 +53,15 @@
 
 .MM_settings > .productsEdit .groupContainer {
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
 }
 
 .MM_settings > .productsEdit .groupContainer > * {
-    margin: 0 5em 8em 5em;
+    margin: 0 2em 8em 2em;
 }
 
 .MM_settings > .productsEdit .group {
-    margin-bottom: 6em;
+    margin-bottom: 5em;
 }
 
 .MM_settings > .productsEdit .group > div:first-of-type,
@@ -76,16 +76,21 @@
 .MM_settings > .productsEdit .group select
 {
     width: 300px;
-    margin: .5em 0;
+    margin: .5em 0 1em;
 }
 
 .MM_settings > .productsEdit .product {
-    margin: .8em 0 .8em 2em;
+    margin: 1.5em 2em;
 }
 
 .MM_settings > .productsEdit .product > div:last-of-type {
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+.MM_settings > .productsEdit .product > div:last-of-type > div {
+    flex: 0;
+    margin: 0 .2em;
 }
 
 input[type=submit] {
