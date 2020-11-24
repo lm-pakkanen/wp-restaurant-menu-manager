@@ -6,6 +6,33 @@ if (!defined('ABSPATH')) {
 
 class MM_DBController {
 
+    public static function createTablesIfNotExists() {
+
+        global $wpdb;
+
+        $charset = $wpdb->get_charset_collate();
+
+        $sql = "CREATE TABLE $wpdb->MM_products (
+                id INT NOT NULL AUTO_INCREMENT,
+                name_fi VARCHAR(255) NOT NULL,
+                name_en VARCHAR(255) NOT NULL,
+                name_sv VARCHAR(255) NOT NULL,
+                price_group INT NOT NULL,
+                is_selected TINYINT(1) NOT NULL DEFAULT FALSE,
+                PRIMARY KEY  (id)
+        ) $charset;";
+
+        $sql2 = "CREATE TABLE $wpdb->MM_priceGroups (
+                 id INT NOT NULL AUTO_INCREMENT,
+                 name VARCHAR(255) NOT NULL,
+                 PRIMARY KEY  (id)
+        ) $charset;";
+
+        require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+        dbDElta($sql);
+        dbDElta($sql2);
+    }
+
     public static function getPriceGroups() {
 
         global $wpdb;

@@ -75,7 +75,9 @@ class MenuManager {
         register_setting('MenuManager', 'MM_MenuTitle_en');
         register_setting('MenuManager', 'MM_MenuTitle_sv');
 
+        MM_DBController::createTablesIfNotExists();
     }
+
 }
 
 new MenuManager();
