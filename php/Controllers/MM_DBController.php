@@ -14,8 +14,14 @@ class MM_DBController {
             "SELECT id, name FROM $wpdb->MM_priceGroups"
         );
 
-        if ($groups === false) {
-            throw new Exception($wpdb->last_error);
+        $error = $wpdb->last_error;
+
+        if (empty($groups)) {
+
+            if ($error) {
+                throw new Exception($error);
+            }
+
         }
 
         return $groups;
@@ -29,8 +35,14 @@ class MM_DBController {
             "SELECT id, name_fi, name_en, name_sv, price_group, is_selected FROM $wpdb->MM_products"
         );
 
-        if ($products === false) {
-            throw new Exception($wpdb->last_error);
+        $error = $wpdb->last_error;
+
+        if (empty($products)) {
+
+            if ($error) {
+                throw new Exception($error);
+            }
+
         }
 
         return $products;
@@ -44,8 +56,14 @@ class MM_DBController {
             "SELECT id, name_fi, name_en, name_sv, price_group FROM $wpdb->MM_products WHERE is_selected = true"
         );
 
-        if ($products === false) {
-            throw new Exception('No selected products were found.');
+        $error = $wpdb->last_error;
+
+        if (empty($products)) {
+
+            if ($error) {
+                throw new Exception($error);
+            }
+
         }
 
         return $products;

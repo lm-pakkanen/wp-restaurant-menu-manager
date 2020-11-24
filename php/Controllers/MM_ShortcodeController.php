@@ -29,6 +29,8 @@ class MM_ShortcodeController {
 
         } catch (Exception $exception) {
 
+            echo "<div class='menuList'>";
+
             if ($locale === 'fi') {
                 echo MENU_LIST_UNAVAILABLE;
             } else if ($locale === 'sv') {
@@ -36,12 +38,16 @@ class MM_ShortcodeController {
             } else {
                 echo MENU_LIST_UNAVAILABLE_EN;
             }
+
+            echo "</div>";
 
             return;
         }
 
         if (empty($groups) || empty($title)) {
 
+            echo "<div class='menuList'>";
+
             if ($locale === 'fi') {
                 echo MENU_LIST_UNAVAILABLE;
             } else if ($locale === 'sv') {
@@ -49,6 +55,8 @@ class MM_ShortcodeController {
             } else {
                 echo MENU_LIST_UNAVAILABLE_EN;
             }
+
+            echo "</div>";
 
             return;
         }

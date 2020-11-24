@@ -27,21 +27,13 @@ class MenuManager {
         register_deactivation_hook(__FILE__, [__CLASS__, 'deactivate']);
         register_uninstall_hook(__FILE__, [__CLASS__, 'uninstall']);
 
-        if ($this->isMartinBaari()) {
-
-            add_action('init', [$this, 'init']);
-            add_action('admin_init', [$this, 'admin_init']);
-            $this->startControllers();
-
-        }
+        add_action('init', [$this, 'init']);
+        $this->startControllers();
     }
 
     public function init() {
         $this->addScripts();
         $this->addStyles();
-    }
-
-    public function admin_init() {
         $this->configure();
     }
 
@@ -84,18 +76,6 @@ class MenuManager {
         register_setting('MenuManager', 'MM_MenuTitle_sv');
 
     }
-
-    private function isMartinBaari() {
-
-        $current_blog_id = get_current_blog_id();
-
-        if (is_multisite()) {
-            return ((int) $current_blog_id === 13);
-        } else {
-            return ((int) $current_blog_id === 1);
-        }
-    }
-
 }
 
 new MenuManager();
