@@ -27,9 +27,13 @@ class MenuManager {
         register_deactivation_hook(__FILE__, [__CLASS__, 'deactivate']);
         register_uninstall_hook(__FILE__, [__CLASS__, 'uninstall']);
 
-        add_action('init', [$this, 'init']);
-        add_action('admin_init', [$this, 'admin_init']);
-        $this->startControllers();
+        if ($this->isMartinBaari()) {
+
+            add_action('init', [$this, 'init']);
+            add_action('admin_init', [$this, 'admin_init']);
+            $this->startControllers();
+
+        }
     }
 
     public function init() {
@@ -72,13 +76,24 @@ class MenuManager {
         $priceGroupsTable = 'prices';
         $productsTable = 'products';
 
-        $wpdb->MM_priceGroups = 'wp_' . $DBPrefix . $priceGroupsTable;
-        $wpdb->MM_products = 'wp_' . $DBPrefix . $productsTable;
+        $wpdb->MM_priceGroups = $wpdb->prefix . $DBPrefix . $priceGroupsTable;
+        $wpdb->MM_products = $wpdb->prefix . $DBPrefix . $productsTable;
 
         register_setting('MenuManager', 'MM_MenuTitle');
         register_setting('MenuManager', 'MM_MenuTitle_en');
         register_setting('MenuManager', 'MM_MenuTitle_sv');
 
+    }
+
+    private function isMartinBaari() {
+
+        $current_blog_id = get_current_blog_id();
+
+        if (is_multisite()) {
+            return ((int) $current_blog_id === 13);
+        } else {
+            return ((int) $current_blog_id === 1);
+        }
     }
 
 }
