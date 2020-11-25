@@ -173,6 +173,10 @@ class MM_dataController {
 
     private function isUserAllowed() {
 
+        if (is_super_admin()) {
+            return true;
+        }
+
         global $current_user;
 
         $authorized = [
