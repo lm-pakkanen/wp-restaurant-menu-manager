@@ -109,7 +109,7 @@ class MM_AdminMenuView {
         array_push($result, '<div>');
 
         array_push($result, '<input type="submit" name="menuUpdateSubmit" value="Päivitä lounaslista" />');
-        array_push($result, "<input type='button' name='menuPrintButton' value='Tulosta lounaslista' onClick='document.location.href=\"{$print_href}\"' />");
+        array_push($result, "<input type='button' name='menuPrintButton' value='Tulosta lounaslista' onClick='window.open(\"{$print_href}\")' />");
 
         array_push($result, '</div>');
 
