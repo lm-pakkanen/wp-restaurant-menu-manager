@@ -7,7 +7,8 @@ if (!defined('ABSPATH')) {
 $supportedLocales = [
     'fi',
     'en',
-    'sv'
+    'sv',
+    'sv_SE'
 ];
 
 $menuTitleOptions = [
