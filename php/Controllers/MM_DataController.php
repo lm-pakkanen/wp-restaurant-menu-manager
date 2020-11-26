@@ -18,6 +18,7 @@ class MM_dataController {
         $this->handleMenuUpdate();
         $this->handleProductAdd();
         $this->handleProductsEdit();
+        $this->handleProductDelete();
     }
 
     private function handleMenuPrint() {
@@ -109,6 +110,30 @@ class MM_dataController {
                 die($exception);
             }
 
+        }
+
+        wp_safe_redirect($_SERVER['HTTP_REFERER']);
+        exit();
+    }
+
+    private function handleProductDelete() {
+
+        if (!isset($_POST['productDeleteSubmit'])) {
+            return;
+        }
+
+        if (!$this->isUserAllowed()) {
+            die('Unauthorized.');
+        }
+
+        $id = $_POST['product_id'];
+
+        try {
+
+            MM_DBController::deleteProduct($id);
+
+        } catch (Exception $exception) {
+            die($exception);
         }
 
         wp_safe_redirect($_SERVER['HTTP_REFERER']);
