@@ -15,9 +15,6 @@ class MM_AdminMenuView {
      */
     public static function getSettingsPage($priceGroups, $products, $menuTitle) {
 
-        $submit_href = wp_nonce_url(admin_url('admin.php'));
-        $print_href = wp_nonce_url(admin_url('admin.php?MM_action=print'));
-
         $result = [];
 
         // Container
@@ -25,6 +22,63 @@ class MM_AdminMenuView {
 
         // Title
         array_push($result, '<h1>Lounaslistat</h1>');
+
+        array_push($result, self::getMenuEditSection($priceGroups, $products, $menuTitle));
+        array_push($result, self::getProductDeleteSection($priceGroups, $products));
+        array_push($result, self::getNewProductSection($priceGroups));
+        array_push($result, self::getEditingSection($priceGroups, $products));
+
+        array_push($result, '</div>');
+
+        // Convert array to string
+        return implode('', $result);
+    }
+
+    private static function getProductDeleteSection($priceGroups, $products) {
+
+        $href = wp_nonce_url(admin_url('admin.php'));
+
+        $result = [];
+
+        array_push($result, '<div class="productDelete">');
+        array_push($result, '<h2>Poista tuote</h2>');
+
+        array_push($result, "<form method='POST' action='$href'>");
+
+
+        array_push($result, '<div>');
+        array_push($result, "<select name='product_id'>");
+
+        forEach($priceGroups as $group) {
+            array_push($result, "<option disabled>$group->name</option>");
+
+            forEach($products as $product) {
+                if ($product->price_group === $group->id) {
+                    array_push($result, "<option value='$product->id'>$product->name_fi</option>");
+                }
+            }
+        }
+
+        array_push($result, "</select>");
+        array_push($result, '</div>');
+
+        array_push($result, '<div>');
+        array_push($result, '<input type="submit" class="productDeleteSubmit" name="productDeleteSubmit" value="Poista tuote"/>');
+        array_push($result, '</div>');
+
+        array_push($result, "</form>");
+        array_push($result, '</div>');
+
+        // Convert array to string
+        return implode('', $result);
+    }
+
+    private static function getMenuEditSection($priceGroups, $products, $menuTitle) {
+
+        $submit_href = wp_nonce_url(admin_url('admin.php'));
+        $print_href = wp_nonce_url(admin_url('admin.php?MM_action=print'));
+
+        $result = [];
 
         array_push($result, '<div class="menuEdit">');
 
@@ -63,12 +117,7 @@ class MM_AdminMenuView {
 
         array_push($result, '</div>');
 
-        array_push($result, self::getNewProductSection($priceGroups));
-        array_push($result, self::getEditingSection($priceGroups, $products));
-
-        array_push($result, '</div>');
-
-        // Convert array to string and echo
+        // Convert array to string
         return implode('', $result);
     }
 
@@ -100,7 +149,7 @@ class MM_AdminMenuView {
 
         array_push($result, '</select>');
 
-        // Convert array to string and echo
+        // Convert array to string
         return implode('', $result);
     }
 
@@ -153,7 +202,7 @@ class MM_AdminMenuView {
 
         }
 
-        // Convert array to string and echo
+        // Convert array to string
         return implode('', $result);
     }
 
@@ -199,6 +248,7 @@ class MM_AdminMenuView {
 
         array_push($result, '</div>');
 
+        // Convert array to string
         return implode('', $result);
     }
 
@@ -295,6 +345,7 @@ class MM_AdminMenuView {
 
         array_push($result, '</div>');
 
+        // Convert array to string
         return implode('', $result);
     }
 
