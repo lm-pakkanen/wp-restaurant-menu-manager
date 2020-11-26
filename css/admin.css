@@ -35,6 +35,14 @@
     margin-top: .5em;
 }
 
+.MM_settings > .productDelete select {
+    width: 300px;
+}
+
+.MM_settings > .productDelete input[type=submit] {
+    background: hsla(0, 100%, 40%, .7);
+}
+
 .MM_settings > .productAdd > form > div:first-of-type {
     display: flex;
     flex-direction: column;
@@ -93,19 +101,13 @@
     margin: 0 .2em;
 }
 
-input[type=submit] {
+input[type=submit],
+input[type=button]
+{
     margin-top: 1em;
     padding: 8px 13px;
     color: white;
     background: #007cba;
-    border: none;
-    border-radius: 3px;
-}
-
-input[type=submit].productDelete {
-    padding: 5px 8px;
-    color: white;
-    background: hsla(0, 100%, 40%, .80);
     border: none;
     border-radius: 3px;
 }
