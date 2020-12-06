@@ -1,1 +1,1 @@
-rm -rf /home/Zecuel/Desktop/MenuManager && rm -rf /home/Zecuel/Desktop/MenuManager.tar && cp -R /var/www/html/wordpress/wp-content/plugins/MenuManager/ /home/Zecuel/Desktop/ && cd /home/Zecuel/Desktop &&  zip -r menumanager MenuManager/* && rm -rf MenuManager/
+rm -rf /home/Zecuel/Desktop/MenuManager && rm -rf /home/Zecuel/Desktop/menumanager.zip && cp -R /var/www/html/wordpress/wp-content/plugins/MenuManager/ /home/Zecuel/Desktop/ && cd /home/Zecuel/Desktop &&  zip -r menumanager MenuManager/* && rm -rf MenuManager/
