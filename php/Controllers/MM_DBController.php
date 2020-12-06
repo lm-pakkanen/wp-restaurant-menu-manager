@@ -100,7 +100,7 @@ class MM_DBController {
 
         if ($lang === 'fi') {
             return get_option('MM_MenuTitle');
-        } else if ($lang  === 'sv') {
+        } else if ($lang  === 'sv' || $lang === 'sv_SE') {
             return get_option('MM_MenuTitle_sv');
         } else {
             return get_option('MM_MenuTitle_en');

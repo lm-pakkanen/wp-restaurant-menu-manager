@@ -33,7 +33,7 @@ class MM_ShortcodeController {
 
             if ($locale === 'fi') {
                 echo MENU_LIST_UNAVAILABLE;
-            } else if ($locale === 'sv') {
+            } else if ($locale === 'sv' || $locale === 'sv_SE') {
                 echo MENU_LIST_UNAVAILABLE_SV;
             } else {
                 echo MENU_LIST_UNAVAILABLE_EN;
@@ -50,7 +50,7 @@ class MM_ShortcodeController {
 
             if ($locale === 'fi') {
                 echo MENU_LIST_UNAVAILABLE;
-            } else if ($locale === 'sv') {
+            } else if ($locale === 'sv' || $locale === 'sv_SE') {
                 echo MENU_LIST_UNAVAILABLE_SV;
             } else {
                 echo MENU_LIST_UNAVAILABLE_EN;
