@@ -22,7 +22,7 @@ class MM_AdminMenuController {
         $options = [
             'title' => 'Lounaslistat',
             'menu_title' => 'Lounaslistat',
-            'capability' => 'manage_options',
+            'capability' => 'publish_posts',
             'menu_slug' => 'lounaslistat',
             'callback' => [$this, 'getSettingsPage'],
             'icon_url' => '',
