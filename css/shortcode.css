@@ -3,14 +3,17 @@
     flex-direction: column;
     max-width: 500px !important;
     margin: 0 auto;
-    font-family: "Times New Roman", Sans-serif, serif;
+    font-family: inherit;
     font-size: 1.1em;
 }
 
 .menuList > .title {
+    color: #CA7F10;
+    font-family: "Amatic SC", Sans-serif, serif;
     font-size: 1.6em;
     font-weight: bold;
     text-transform: uppercase;
+
 }
 
 .menuList > .group {
