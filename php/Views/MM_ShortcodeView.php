@@ -48,8 +48,6 @@ class MM_ShortcodeView {
             }
 
             if (!$productFound) {
-                array_push($groupResult, '<div>----</div>');
-                array_push($groupResult, "<div>----</div>");
                 array_push($groupResult, '</div>');
                 $emptyGroups = array_merge($emptyGroups, $groupResult);
             } else {
