@@ -205,7 +205,9 @@ class MM_dataController {
         global $current_user;
 
         $authorized = [
-            'administrator'
+            'administrator',
+            'editor',
+            'author'
         ];
 
         return array_intersect($authorized, $current_user->roles);
